@@ -13,12 +13,12 @@ char ch = 'a';
 	{
 		putchar(ch);
 		ch++;
-		if(ch == 'e')
+		if (ch == 'e')
 		{
 			ch++;
 			continue;
 		}
-		if(ch == 'q')
+		if (ch == 'q')
 		{
 			ch++;
 			continue;
