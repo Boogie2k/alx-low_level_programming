@@ -9,20 +9,23 @@
 
 int main()
 {
-	int ran = rand();
+	int ran = 98;
+	int neg = -98;
+	int zer = 0;
+
 	if(ran > 0)
 	{
 		printf("%d is positive \n", ran);
 	}
 
-	else if(ran ==0)
+	if(zer ==0)
 	{
-		printf("%d is zero \n", ran);
+		printf("%d is zero \n", zer);
 	}
 
-	else if (ran < 0)
+	if (neg < 0)
 	{
-		printf("%d is negative \n", ran);
+		printf("%d is negative \n", neg);
 	}
 	return 0;
 }
