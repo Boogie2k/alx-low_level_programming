@@ -10,22 +10,20 @@
 int main()
 {
 	int ran = 98;
-	int neg = -98;
-	int zer = 0;
 
 	if(ran > 0)
 	{
 		printf("%d is positive \n", ran);
 	}
 
-	if(zer ==0)
+	if(ran ==0)
 	{
-		printf("%d is zero \n", zer);
+		printf("%d is zero \n", ran);
 	}
 
-	if (neg < 0)
+	if (ran < 0)
 	{
-		printf("%d is negative \n", neg);
+		printf("%d is negative \n", ran);
 	}
 	return 0;
 }
