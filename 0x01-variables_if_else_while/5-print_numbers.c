@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-/*
- * main - prints the numbers
- * numbsers are looped using the for loop
- * return: always return 0
+/**
+ * main - prints all single digit numbers of base
+ * 10 starting from 0, followed by a new line
+ * Return: Always 0 (Success)
  */
 
 int main (void)
