@@ -13,17 +13,17 @@ int main()
 
 	if(ran > 0)
 	{
-		printf("%d is positive \n", ran);
+		printf("%d is positive\n", ran);
 	}
 
 	if(ran ==0)
 	{
-		printf("%d is zero \n", ran);
+		printf("%d is zero\n", ran);
 	}
 
 	if (ran < 0)
 	{
-		printf("%d is negative \n", ran);
+		printf("%d is negative\n", ran);
 	}
 	return 0;
 }
