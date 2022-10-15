@@ -1,29 +1,23 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
 
-/*
- * the first statement would check if the output is positive
- *  the second statement would check if the output is negative
- *  the last state ment would check if the number is zero
+/**
+ * main - assigns a random number to int n everytime
+ * it executes, and prints it
+ * Return: Always 0 (Success)
  */
-
-int main()
+int main(void)
 {
-	int ran = 98;
+	int n;
 
-	if(ran > 0)
-	{
-		printf("%d is positive\n", ran);
-	}
-
-	if(ran ==0)
-	{
-		printf("%d is zero\n", ran);
-	}
-
-	if (ran < 0)
-	{
-		printf("%d is negative\n", ran);
-	}
-	return 0;
+	srand(time(0));
+	n = rand() - RAND_MAX / 2;
+	if (n > 0)
+		printf("%d is positive\n", n);
+	else if (n == 0)
+		printf("%d is zero\n", n);
+	else if (n < 0)
+		printf("%d is negative\n", n);
+	return (0);
 }
