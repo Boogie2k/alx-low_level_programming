@@ -3,25 +3,22 @@
 #include <stdio.h>
 
 /**
- * main - assigns a random number to int n everytime
- * it executes, and prints it
+ * main - prints the last digit of the random
+ * number stored in the variable n
  * Return: Always 0 (Success)
  */
-
 int main(void)
 {
 	int n;
-	int y;
-	srand(time(0));
 
-	n = rand() - RAND_MAX /2;
-	y = n%10;
-	
-	if(y > 5)
-		printf("Last digit of %d is %d  and is greater than 5\n", n, y);
-	if(y == 0)
-		printf("Last digit of %d is 0 and is 0\n", n);
-	if(y < 6)
-		printf("the last digit of %d is %d and is less than 6 and not 0\n", n, y);
-	return 0;
+	srand(time(0));
+	n = rand() - RAND_MAX / 2;
+	printf("Last digit of %d is %d ", n, n % 10);
+	if (n % 10 > 5)
+		printf("and is greater than 5\n");
+	else if (n % 10 == 0)
+		printf("and is 0\n");
+	else if (n % 10 < 6 && n % 10 != 0)
+		printf("and is less than 6 and not 0\n");
+	return (0);
 }
