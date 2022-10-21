@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 /**
  * print_numbers - check the code for Holberton School students.
  * Return: sucsess
