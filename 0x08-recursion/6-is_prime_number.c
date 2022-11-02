@@ -1,40 +1,31 @@
 #include "main.h"
+int actual_prime(int n, int i);
 
 /**
- * tester - test square root
- * @a: var
- * @b: var
- * Return: int
+ * is_prime_number - says if an integer is a prime number or not
+ * @n: number to evaluate
+ *
+ * Return: 1 if n is a prime number, 0 if not
  */
-
-int tester(int a, int b);
-
-/**
- * _sqrt_recursion - get the sqqrt of n with recursion
- * @n: var
- * Return: sqrt or -1
- */
-
-int _sqrt_recursion(int n)
+int is_prime_number(int n)
 {
-	if (n == 0)
+	if (n <= 1)
 		return (0);
-	return (tester(1, n));
+	return (actual_prime(n, n - 1));
 }
 
 /**
- * tester - tests for square root
- * @a: var
- * @b: var
- * Return: int
+ * actual_prime - calculates if a number is prime recursively
+ * @n: number to evaluate
+ * @i: iterator
+ *
+ * Return: 1 if n is prime, 0 if not
  */
-
-int tester(int a, int b)
+int actual_prime(int n, int i)
 {
-	if (a * a > b)
-		return (-1);
-	else if (a * a == b)
-		return (a);
-	else
-		return (tester(a + 1, b));
+	if (i == 1)
+		return (1);
+	if (n % i == 0 && i > 0)
+		return (0);
+	return (actual_prime(n, i - 1));
 }
