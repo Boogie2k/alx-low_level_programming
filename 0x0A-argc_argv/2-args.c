@@ -1,10 +1,9 @@
 #include <stdio.h>
 
-
 /**
- * main - prints its name followed by a new line
- * @argc: counter
- * @argv: array of arguments
+ * main - Print all arguments recieved on a new line
+ * @argc: argument counter
+ * @argv: argumenr vector
  * Return: 0
  */
 
@@ -18,4 +17,3 @@ int main(int argc, char *argv[])
 	}
 	return (0);
 }
-
