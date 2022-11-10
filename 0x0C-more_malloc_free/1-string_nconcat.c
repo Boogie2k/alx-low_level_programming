@@ -1,109 +1,45 @@
-#include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 
 /**
- * string_count - counts the number of chars in a string
- * @s2: string to count
- * Return: number of chars in string
+ * *string_nconcat - concatenates n bytes of a string to another string
+ * @s1: string to append to
+ * @s2: string to concatenate from
+ * @n: number of bytes from s2 to concatenate to s1
+ *
+ * Return: pointer to the resulting string
  */
-
-int string_count(char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s2[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-/**
- * cutter - handles string_concat if i > n
- * @s1: s1
- * @n: num
- * @i: num
- * @s2: s2
- * Return: ptr
- */
-
-char *cutter(char *s1, char *s2, unsigned int n, unsigned int i)
-{
-	char *ptr;
-	unsigned int k, j;
-
-	ptr = malloc(sizeof(s1));
-	if (!ptr)
-		return (NULL);
-	if (i > n)
-	{
-		k = 0;
-		while (s1[k] != '\0')
-		{
-			k++;
-		}
-		j = 0;
-		while (j <= i && s2[j] != '\0')
-		{
-			s1[k++] = s2[j];
-			j++;
-		}
-		s1[k++] = '\0';
-	}
-	return (ptr);
-}
-
-/**
- * string_nconcat - concat @n bytes of @s2 to @s1
- * @n: number od bytes to use. If n >= length of s2,
- * the entire s2 string is used. if n is null, s2 is an empty string
- * @s1: original string
- * @s2: string to be appended
- * Return: ptr to new and improved s1, or NULL
- */
-
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	unsigned int i, k, j;
-	char *ptr;
+	char *s;
+	unsigned int i = 0, j = 0, len1 = 0, len2 = 0;
 
-	ptr = malloc(sizeof(s1));
-	if (!ptr)
+	while (s1 && s1[len1])
+		len1++;
+	while (s2 && s2[len2])
+		len2++;
+
+	if (n < len2)
+		s = malloc(sizeof(char) * (len1 + n + 1));
+	else
+		s = malloc(sizeof(char) * (len1 + len2 + 1));
+
+	if (!s)
 		return (NULL);
-	if (s2 == NULL)
+
+	while (i < len1)
 	{
-		j = 0;
-		*s2 = atoi("");
-		while (s1[j] != '\0')
-		{
-			j++;
-		}
-		s1[j++] = *s2;
-		s1[j++] = '\0';
-		return (ptr);
+		s[i] = s1[i];
+		i++;
 	}
-	i = string_count(s2);
-	if (i < n)
-	{
-		j = k = 0;
-		while (s1[j] != '\0')
-		{
-			j++;
-		}
-		while (k <= i)
-		{
-			s1[j++] = s2[k];
-			k++;
-		}
-		s1[j++] = '\0';
-		return (ptr);
-	}
-	else if (i > n)
-	{
-		ptr = cutter(s1, s2, n, i);
-		return (ptr);
-	}
-	return (NULL);
+
+	while (n < len2 && i < (len1 + n))
+		s[i++] = s2[j++];
+
+	while (n >= len2 && i < (len1 + len2))
+		s[i++] = s2[j++];
+
+	s[i] = '\0';
+
+	return (s);
 }
