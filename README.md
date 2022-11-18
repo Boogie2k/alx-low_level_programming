@@ -1,2 +1,1 @@
-#c
-tutorial on c
+# c tutorial on c
