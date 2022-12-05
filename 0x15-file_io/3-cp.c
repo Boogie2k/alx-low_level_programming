@@ -1,93 +1,73 @@
 #include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stddef.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <string.h>
 
 /**
- * create_buffer - allocate 1024 bytes to a specific buffer
- * @filename: name of file buffer is storing chars for.
- * Return: allocated buffer size
+ * main - copy content of source file to destination file
+ * @ac: source file
+ * @av: destination file
+ * Return: 1 on success
  */
-char *create_buffer(char *filename)
-{
-	char *bufr;
-	/* allocate memory to buffer */
-	bufr = malloc(sizeof(char) * 1024);
-	if (bufr == NULL) /* malloc fails */
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
-		exit(99);
-	}
-	return (bufr);
-}
 
-/**
- * close_file - close file descriptors when done with operation
- * @fd: file descriptor to close
- * Return: void
- */
-void close_file(int fd)
+int main(int ac, char **av)
 {
-	int close_var;
-	/* close file descriptor */
-	close_var = close(fd);
-	/* set condition for close() failure */
-	if (close_var == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
-
-/**
- * main - copy file from one buffer to another
- * @argc: cmdline argument count
- * @argv: argument vector (file to copy from and to)
- * Return: On success, 0.
- */
-int main(int argc, char **argv)
-{
-	int file_from, file_to, rd, wr;
+	int fd, fdd;
 	char *buffer;
 
-	/* set condition if argc not up to */
-	if (argc != 3)
+	char *file_from = av[1];
+	char *file_to = av[2];
+
+	if (ac != 3)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		printf("Error: not enough arguments\n");
 		exit(97);
 	}
-	/* call buffer function */
-	buffer = create_buffer(argv[2]);
-	/* open file_from */
-	file_from = open(argv[1], O_RDONLY);
-	/* read from file_from */
-	rd = read(file_from, buffer, 1024);
-	/* open and write to file_to */
-	file_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (!file_from || !file_to)
+	{
+		printf("Usage: cp file_from file to\n");
+		exit(97);
+	}
 
-	/* set fail conditions of file_to and file_from */
-	do {
-		if (file_from == -1 || rd == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-			free(buffer);
-			exit(98);
-		}
+	if (file_from == NULL || access(file_from, F_OK) == 0)
+	{
+		printf("Error: Can't read from  %s\n", file_from);
+		exit(98);
+	}
 
-		wr = write(file_to, buffer, rd);
-		if (file_to == -1 || wr == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			free(buffer);
-			exit(99);
-		}
-		/* read from file_from */
-		rd = read(file_from, buffer, 1024);
-		/* create append instruction */
-		file_to = open(argv[2], O_WRONLY | O_APPEND);
-	} while (rd > 0);
+	fdd = open(file_from, O_WRONLY);
+	if (fdd == -1)
+		exit(98);
 
-	/* clean up and end program */
-	free(buffer);
-	close_file(file_from);
-	close_file(file_to);
+	if (access(file_to, F_OK) == 0)
+	{
+		fd = open(file_to, O_WRONLY);
+	}
+	else
+		fd = open(file_to, O_CREAT | O_WRONLY, 0664);
+	if (fd == -1)
+	{
+		printf("Error: Can't write to %s\n", file_to);
+		exit(99);
+	}
 
-	return (0);
+	buffer = malloc(sizeof(char) * 1024);
+	if (buffer == NULL)
+		return (0);
+
+	read(fdd, buffer, 1023);
+	while (buffer[1023] != EOF)
+	{
+		write(fd, buffer, 1023);
+		free(buffer);
+		read(fdd, buffer, 1023);
+	}
+	close(fd);
+	close(fdd);
+	return (1);
 }
